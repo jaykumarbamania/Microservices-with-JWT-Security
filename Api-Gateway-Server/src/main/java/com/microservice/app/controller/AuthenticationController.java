@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.microservice.app.config.JwtTokenUtil;
 import com.microservice.app.model.DAOUser;
+import com.microservice.app.model.JwtRequest;
 import com.microservice.app.model.JwtResponse;
 import com.microservice.app.model.UserDTO;
 import com.microservice.app.service.UserService;
@@ -29,7 +30,7 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<?> generateToken(@RequestBody UserDTO loginUser) 
+    public ResponseEntity<?> generateToken(@RequestBody JwtRequest loginUser) 
               throws AuthenticationException {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

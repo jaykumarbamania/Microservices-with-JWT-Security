@@ -12,6 +12,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,8 @@ public class UserDTO implements UserDetails {
 	private String username;
 	private String password;
 	private String role;
+	
+	@JsonIgnore
 	private List<GrantedAuthority> authorities;
 	
 	public UserDTO(DAOUser user) {

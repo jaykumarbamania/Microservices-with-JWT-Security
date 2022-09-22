@@ -1,0 +1,10 @@
+@EnableWebFluxSecurity
+public class ReactiveWebfluxSecurityConfig {
+
+@Bean
+public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+    http
+        .csrf(csrf -> csrf.disable());
+    return http.build();
+}
+}

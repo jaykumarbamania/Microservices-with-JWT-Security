@@ -1,3 +1,4 @@
+id, from,to, conversionMultiple, environment
 11001, USD, INR, 79, 8000
 11002, EUR, INR, 99, 8001
 11003, AUD, INR, 25, 8002
