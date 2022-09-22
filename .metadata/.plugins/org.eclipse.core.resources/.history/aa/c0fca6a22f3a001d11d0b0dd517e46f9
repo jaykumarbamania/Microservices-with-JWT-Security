@@ -1,0 +1,37 @@
+package com.microservice.app.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.microservice.app.model.DAOUser;
+import com.microservice.app.model.UserDTO;
+import com.microservice.app.repository.UserRepository;
+
+@Service(value = "userService")
+public class UserService implements UserDetailsService {
+	@Autowired
+	private UserRepository userDao;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	public UserDTO save(LoginUser user) {
+		UserDTO newUser = new UserDTO();
+		newUser.setUsername(user.getUsername());
+		newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		return userDao.save(newUser);
+	}
+
+	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+		DAOUser user = userDao.findByUsername(userId);
+		if (user == null) {
+			throw new UsernameNotFoundException("Invalid username or password.");
+		}
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				getAuthority());
+	}
+
+}

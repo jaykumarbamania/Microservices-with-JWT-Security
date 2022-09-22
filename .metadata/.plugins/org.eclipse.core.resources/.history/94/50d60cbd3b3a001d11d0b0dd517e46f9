@@ -1,0 +1,15 @@
+#server:
+#  port: ${PORT:8081}
+#eureka:
+#  client:
+#    fetchRegistry: true
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+#zuul:
+#  routes:
+#    serviceA:
+#      path: /greetings-api/**
+#      serviceId: greeting-service
+#    serviceB:
+#      path: /tasks-api/**
+#      serviceId: task-service

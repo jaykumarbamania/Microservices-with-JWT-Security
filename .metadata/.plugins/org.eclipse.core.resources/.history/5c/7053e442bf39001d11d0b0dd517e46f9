@@ -1,0 +1,6 @@
+package com.microservice.app.model;
+
+public enum ROLES {
+	ADMIN,
+	GENERAL
+}

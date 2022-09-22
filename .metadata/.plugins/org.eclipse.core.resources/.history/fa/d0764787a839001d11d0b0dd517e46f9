@@ -1,0 +1,58 @@
+package com.microservice.app.controller;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.microservice.app.model.ExchangeRate;
+import com.microservice.app.repo.ExchangeRateRepository;
+
+
+@RestController
+public class ExchangeRateController {
+	
+	@Autowired
+	private Environment environment;
+	
+	@Autowired
+	private ExchangeRateRepository repository;
+	
+//	@GetMapping("/currency-exchange/from/{from}/to/{to}")
+//	public CurrencyExchange getExchangeValue(
+//			@PathVariable String from,@PathVariable String to
+//			) {
+//		
+//		CurrencyExchange ce =  new CurrencyExchange(1000L, from, to,BigDecimal.valueOf(50));
+//		String port = environment.getProperty("local.server.port");
+//		ce.setEnvironment(port);
+//		return ce;
+//	}
+	
+	@GetMapping("/currency-exchange/from/{from}/to/{to}")
+	public ExchangeRate getExchangeValue(
+			@PathVariable String from, @PathVariable String to) {
+		ExchangeRate object =  repository.findByFromAndTo(from, to);
+		if(object==null) {
+			throw new RuntimeException("Unable to find data for:"+from+ " to:"+to);
+		}
+		String port = environment.getProperty("local.server.port");//for getting port no
+		object.setEnvironment(port);
+		return object;
+	}
+	
+	@GetMapping("/currency-exchange")
+	public List<ExchangeRate> getAllExchangeRates() {
+		return repository.findAll();
+	}
+	
+	@PostMapping("/currency-exchange")
+	public List<ExchangeRate> addNew() {
+		return repository.findAll();
+	}
+}

@@ -1,0 +1,12 @@
+package com.microservice.app.controller;
+@RestController
+@RequestMapping("/users")
+public class UserController {
+    @Autowired
+    private UserService userService;
+    @PostMapping("/signup")
+    public User saveUser(@RequestBody LoginUser user){
+      return userService.save(user);
+    }
+    // Other methods
+}

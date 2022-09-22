@@ -1,0 +1,22 @@
+package com.microservice.app.model;
+
+import java.math.BigDecimal;
+
+import javax.persistence.Entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+@Entity(name="users")
+public class Users {
+	private String username;
+	private String password;
+	private ROLE role;
+
+}
