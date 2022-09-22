@@ -1,2 +1,5 @@
 1663772765602	Rename resource 'spring-boot-jwt'
 1663846247842	Delete resource 'Currency-Service'
+1663875196660	Rename resource 'Currency-Conversion-Service'
+1663875243771	Rename resource 'Currency-Exchange-Service'
+1663875271814	Rename resource 'Eureka-Server'

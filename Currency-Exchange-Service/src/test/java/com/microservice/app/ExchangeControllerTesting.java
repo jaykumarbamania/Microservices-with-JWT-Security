@@ -23,8 +23,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 	import org.springframework.http.ResponseEntity;
 	import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.microservice.app.model.ExchangeRate;
-import com.microservice.app.repo.ExchangeRateRepository;
+import com.hashedin.currencyexchangeservice.CurrencyExchangeServiceApplication;
+import com.hashedin.currencyexchangeservice.model.ExchangeRate;
+import com.hashedin.currencyexchangeservice.repo.ExchangeRateRepository;
 
 	@ExtendWith(SpringExtension.class)
 	@SpringBootTest(classes = CurrencyExchangeServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
