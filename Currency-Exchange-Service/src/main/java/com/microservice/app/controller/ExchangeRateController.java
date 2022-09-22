@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +21,7 @@ import com.microservice.app.model.ExchangeRate;
 import com.microservice.app.repo.ExchangeRateRepository;
 
 
-@RestController
+@RestController  
 public class ExchangeRateController {
 	
 	@Autowired
@@ -40,6 +42,7 @@ public class ExchangeRateController {
 //	}
 	
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
+	@Cacheable(value="exRate")  
 	public ExchangeRate getExchangeValue(
 			@PathVariable String from, @PathVariable String to) {
 		ExchangeRate object =  repository.findByFromAndTo(from, to);
@@ -52,6 +55,7 @@ public class ExchangeRateController {
 	}
 	
 	@GetMapping("/currency-exchange")
+	@Cacheable(value="exRateList")  
 	public List<ExchangeRate> getAllExchangeRates() {
 		return repository.findAll();
 	}
