@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,8 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.microservice.app.model.ExchangeRate;
 import com.microservice.app.repo.ExchangeRateRepository;
 
+import lombok.extern.slf4j.Slf4j;
 
-@RestController  
+//import brave.sampler.Sampler;
+
+
+@RestController 
+@Slf4j
 public class ExchangeRateController {
 	
 	@Autowired
@@ -30,20 +38,15 @@ public class ExchangeRateController {
 	@Autowired
 	private ExchangeRateRepository repository;
 	
-//	@GetMapping("/currency-exchange/from/{from}/to/{to}")
-//	public CurrencyExchange getExchangeValue(
-//			@PathVariable String from,@PathVariable String to
-//			) {
-//		
-//		CurrencyExchange ce =  new CurrencyExchange(1000L, from, to,BigDecimal.valueOf(50));
-//		String port = environment.getProperty("local.server.port");
-//		ce.setEnvironment(port);
-//		return ce;
+	
+//	@Bean
+//	public Sampler defaultSampler() {
+//		return Sampler.ALWAYS_SAMPLE;
 //	}
 	
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	@Cacheable(value="exRate")  
-	public ExchangeRate getExchangeValue(
+	public ExchangeRate getExchangeRateValue(
 			@PathVariable String from, @PathVariable String to) {
 		ExchangeRate object =  repository.findByFromAndTo(from, to);
 		if(object==null) {
@@ -51,12 +54,14 @@ public class ExchangeRateController {
 		}
 		String port = environment.getProperty("local.server.port");//for getting port no
 		object.setEnvironment(port);
+		log.warn("getExchangeValue found {} ",object);
 		return object;
 	}
 	
 	@GetMapping("/currency-exchange")
-	@Cacheable(value="exRateList")  
+	@Cacheable(value="exRates")  
 	public List<ExchangeRate> getAllExchangeRates() {
+		log.warn("inside getAllExchangeRates");
 		return repository.findAll();
 	}
 	

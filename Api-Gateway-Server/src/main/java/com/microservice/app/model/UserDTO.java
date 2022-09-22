@@ -18,67 +18,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-
-@NoArgsConstructor
-public class UserDTO implements UserDetails {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class UserDTO {
 	private String username;
 	private String password;
-	private String role;
-	
-	@JsonIgnore
-	private List<GrantedAuthority> authorities;
-	
-	public UserDTO(DAOUser user) {
-		this.username = user.getUsername();
-		this.password = user.getPassword();
-		this.authorities = Arrays.stream(user.getRole().split(","))
-					.map(SimpleGrantedAuthority::new)
-					.collect(Collectors.toList());
-		this.role = user.getRole();
+
+	public String getUsername() {
+		return username;
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	@Override
 	public String getPassword() {
 		return password;
 	}
 
-	@Override
-	public String getUsername() {
-		return username;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	
-	public String getRole() {
-		return role;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 }

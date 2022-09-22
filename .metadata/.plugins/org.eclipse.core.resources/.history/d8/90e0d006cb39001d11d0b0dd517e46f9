@@ -1,9 +1,0 @@
-jwt.secret=javainuse
-server.port=8080
-
-#spring.config.import=optional:configserver:http://localhost:8888
-
-spring.jpa.defer-datasource-initialization=true
-spring.jpa.show-sql=true
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.h2.console.enabled=true

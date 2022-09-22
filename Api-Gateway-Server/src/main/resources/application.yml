@@ -19,6 +19,6 @@
 
 spring:
   main:
-    allow-circular-references: true  cloud:    gateway:      routes:      - id: currency-exchange_routes
-        uri: http://localhost:8000
-        predicates:        - Path=/currency-exchange
+    allow-circular-references: true#  cloud:#    gateway:#      routes:#      - id: currency-exchange_routes
+#        uri: http://localhost:8000
+#        predicates:#        - Path=/currency-exchange

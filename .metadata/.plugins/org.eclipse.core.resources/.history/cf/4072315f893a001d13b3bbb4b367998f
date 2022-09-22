@@ -1,0 +1,14 @@
+
+spring.application.name=eureka-server
+
+server.port=8761
+
+
+#dont want eureka to register itself
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+
+eureka.client.serviceUrl.defaultZone=http://localhost:8888
+
+#trace every request 
+#spring.sleuth.sampler.probability=1.0

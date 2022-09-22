@@ -16,7 +16,7 @@ import com.microservice.app.model.DAOUser;
 import com.microservice.app.model.UserDTO;
 import com.microservice.app.repository.UserRepository;
 
-@Service(value = "userService")
+@Service
 public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository userDao;
@@ -29,7 +29,6 @@ public class UserService implements UserDetailsService {
 		DAOUser newUser = new DAOUser();
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-		newUser.setRole(user.getRole());
 		return userDao.save(newUser);
 	}
 
@@ -43,10 +42,6 @@ public class UserService implements UserDetailsService {
 				new ArrayList<>());
 	}
 
-	public DAOUser findOne(String username) {
-		// TODO Auto-generated method stub
-		return userDao.findByUsername(username);
-	}
 	
 	
 

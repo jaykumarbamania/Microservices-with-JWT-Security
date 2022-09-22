@@ -24,26 +24,32 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Resource(name= "userService")
+	@Autowired
 	private UserDetailsService userDetailsService;
 	@Autowired
-	private JwtAuthenticationEntryPoint unauthorizedHandler;
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-
-
-	@Override
+	private JwtRequestFilter jwtRequestFilter;
+	
 	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 
+
 	@Autowired
-	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService)
-		.passwordEncoder(passwordEncoder)
-		;
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		// configure AuthenticationManager so that it knows from where to load
+		// user for matching credentials
+		// Use BCryptPasswordEncoder
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -52,11 +58,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().authorizeRequests().antMatchers("/login/*", "/users/signup").permitAll()
-				.anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		httpSecurity.cors().disable();
+		httpSecurity.csrf().disable()
+				// dont authenticate this particular request
+				.authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
+				// all other requests need to be authenticated
+				anyRequest().authenticated().and().
+				// make sure we use stateless session; session won't be used to
+				// store user's state.
+				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		// Add a filter to validate the tokens with every request
+		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Bean(name = "mvcHandlerMappingIntrospector")

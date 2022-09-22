@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ExchangeControllerTesting" project="Currency-Exchange-Service" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="com.microservice.app.ExchangeControllerTesting" time="1.789" displayname="ExchangeControllerTesting" uniqueid="[engine:junit-jupiter]/[class:com.microservice.app.ExchangeControllerTesting]">
+    <testcase name="testRetrieveAllExchangeRates" classname="com.microservice.app.ExchangeControllerTesting" time="1.241" displayname="testRetrieveAllExchangeRates()" uniqueid="[engine:junit-jupiter]/[class:com.microservice.app.ExchangeControllerTesting]/[method:testRetrieveAllExchangeRates()]"/>
+    <testcase name="testDeleteExchangeRate" classname="com.microservice.app.ExchangeControllerTesting" time="0.212" displayname="testDeleteExchangeRate()" uniqueid="[engine:junit-jupiter]/[class:com.microservice.app.ExchangeControllerTesting]/[method:testDeleteExchangeRate()]"/>
+    <testcase name="testUpdateExchangeRate" classname="com.microservice.app.ExchangeControllerTesting" time="0.132" displayname="testUpdateExchangeRate()" uniqueid="[engine:junit-jupiter]/[class:com.microservice.app.ExchangeControllerTesting]/[method:testUpdateExchangeRate()]"/>
+    <testcase name="testAddExchangeRate" classname="com.microservice.app.ExchangeControllerTesting" time="0.097" displayname="testAddExchangeRate()" uniqueid="[engine:junit-jupiter]/[class:com.microservice.app.ExchangeControllerTesting]/[method:testAddExchangeRate()]"/>
+    <testcase name="testRetrieveOneExchangeRates" classname="com.microservice.app.ExchangeControllerTesting" time="0.106" displayname="testRetrieveOneExchangeRates()" uniqueid="[engine:junit-jupiter]/[class:com.microservice.app.ExchangeControllerTesting]/[method:testRetrieveOneExchangeRates()]"/>
+  </testsuite>
+</testrun>
